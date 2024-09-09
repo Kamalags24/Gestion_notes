@@ -1,0 +1,121 @@
+<div class="container">
+  <h1 class="mb-4">Application de Gestion de Notes</h1>
+
+  <!-- Bouton Ajouter -->
+  <!-- <button class="btn btn-primary mb-4" (click)="showForm()">
+    Ajouter une Note
+  </button> -->
+
+  <button 
+    class="btn btn-primary mb-4"
+    (click)="toggleForm()">
+    {{ isFormVisible ? '❌' : 'Ajouter une Note' }}
+  </button>
+
+  <!-- Formulaire de création/édition de note -->
+  <div class="card mb-4" *ngIf="isFormVisible">
+    <div class="card-body">
+      <h5 class="card-title">
+        {{ editMode ? "Modifier la note" : "Créer une nouvelle note" }}
+      </h5>
+      <form (ngSubmit)="createNote()">
+        <div class="mb-3">
+          <label for="noteTitle" class="form-label">Titre</label>
+          <input
+            type="text"
+            class="form-control"
+            id="noteTitle"
+            [(ngModel)]="currentNote.title"
+            name="title"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="noteContent" class="form-label">Contenu</label>
+          <textarea
+            class="form-control"
+            id="noteContent"
+            rows="3"
+            [(ngModel)]="currentNote.content"
+            name="content"
+            required
+          ></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="noteTags" class="form-label"
+            >Tags (séparés par des virgules)</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="noteTags"
+            [(ngModel)]="currentNote.tags"
+            name="tags"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">
+          {{ editMode ? "Mettre à jour" : "Créer" }}
+        </button>
+        <!-- <button type="button" class="btn btn-secondary" (click)="hideForm()">
+          Fermer
+        </button> -->
+      </form>
+    </div>
+  </div>
+
+  <!-- Barre de recherche et filtres -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Rechercher des notes..."
+        [(ngModel)]="searchQuery"
+      />
+    </div>
+    <div class="col-md-6">
+      <select class="form-select" [(ngModel)]="selectedTag">
+        <option value="">Tous les tags</option>
+        <option *ngFor="let tag of allTags" [value]="tag">{{ tag }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Liste des notes -->
+  <!-- <div class="row">
+    <div class="col-md-4" *ngFor="let note of notes | filter:searchQuery:selectedTag">
+      <div class="card note-card">
+        <div class="card-body">
+          <h5 class="card-title">{{note.title}}</h5>
+          <p class="card-text">{{note.content}}</p>
+          <div class="mb-2">
+            <span class="badge bg-secondary tag" *ngFor="let tag of note.tags">{{tag}}</span>
+          </div>
+          <button class="btn btn-sm btn-primary" (click)="editNote(note)">Modifier</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteNote(note)">Supprimer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+  <!-- Liste des notes -->
+  <div class="notes-list">
+    <div
+      class="note-card"
+      *ngFor="let note of notes | filter : searchQuery : selectedTag"
+    >
+      <h3>{{ note.title }}</h3>
+      <p>{{ note.content }}</p>
+      <div class="tags">
+        <span class="tag" *ngFor="let tag of note.tags">{{ tag }}</span>
+      </div>
+      <div class="note-actions">
+        <button class="btn btn-sm btn-primary" (click)="editNote(note)">✏</button>
+        <button class="btn btn-sm btn-danger" (click)="deleteNote(note.id)">
+          🗑
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
