@@ -50,14 +50,14 @@
     gap: 10px;
   }
   
-  /* .btn-primary {
+  .btn-primary {
     background-color: #1976d2;
     color: #fff;
     border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
+    /* padding: 10px 20px; */
+    /* border-radius: 4px; */
     cursor: pointer;
-  } */
+  } 
   
   .btn-primary:hover {
     background-color: #1565c0;
